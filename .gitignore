@@ -1,0 +1,23 @@
+# Build
+/build/
+/out/
+/cmake-build-*/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiler
+*.o
+*.obj
+*.exe
+*.a
+*.so
+*.dll
+
+# Others
+compile_commands.json
