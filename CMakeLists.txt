@@ -15,7 +15,19 @@ else()
   add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+# Header-only library
+add_library(thread_pool INTERFACE)
+target_include_directories(thread_pool INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_subdirectory(src)
-add_subdirectory(app)
+# Example
+add_executable(basic_usage examples/basic_usage.cpp)
+target_link_libraries(basic_usage PRIVATE thread_pool)
+
+# Tests
+add_executable(test_thread_pool tests/test_thread_pool.cpp)
+target_link_libraries(test_thread_pool PRIVATE thread_pool)
+
+# Platform-specific threading
+find_package(Threads REQUIRED)
+target_link_libraries(basic_usage PRIVATE Threads::Threads)
+target_link_libraries(test_thread_pool PRIVATE Threads::Threads)
